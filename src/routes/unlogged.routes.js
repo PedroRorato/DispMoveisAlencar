@@ -1,15 +1,18 @@
 import React from "react";
-import { Text } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Login from "../screens/Login";
+import InicialScreen from "../screens/InicialScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function DashboardRoutes() {
+export default function UnloggedRoutes() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="log" component={Login} />
-    </Tab.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Inicial" component={InicialScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Stack.Navigator>
   );
 }

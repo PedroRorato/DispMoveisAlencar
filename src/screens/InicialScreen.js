@@ -1,10 +1,14 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
-export default function Login({ navigation }) {
+export default function InicialScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text>Inicial</Text>
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate("Login", { color: "red" })}
+      />
       <Button
         title="Register"
         onPress={() => navigation.navigate("Register", { color: "red" })}

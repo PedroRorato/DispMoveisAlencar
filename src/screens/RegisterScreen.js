@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Register({ route }) {
+export default function RegisterScreen() {
   return (
     <View style={styles.container}>
-      <Text>Register: {route.params.color}</Text>
+      <Text>Register</Text>
     </View>
   );
 }

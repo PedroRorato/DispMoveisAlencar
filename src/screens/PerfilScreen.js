@@ -5,10 +5,7 @@ export default function PerfilScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Perfil</Text>
-      <Button
-        title="Logout"
-        onPress={() => navigation.navigate("Login", { color: "red" })}
-      />
+      <Button title="Logout" onPress={() => navigation.navigate("Unlogged")} />
     </View>
   );
 }
