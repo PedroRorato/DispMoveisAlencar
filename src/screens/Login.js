@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
-export default function Login() {
+export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
+      <Button
+        title="Register"
+        onPress={() => navigation.navigate("Register", { color: "red" })}
+      />
     </View>
   );
 }
