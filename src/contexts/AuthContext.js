@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(async () => {
     //###Trocar pela memória do Aparelho###
     const token = localStorage.getItem("@AgendouMe:token");
-    //
 
     if (token) {
       //Add Header

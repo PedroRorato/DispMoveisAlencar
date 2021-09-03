@@ -1,17 +1,18 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+
+import BigButton from "../components/BigButton";
+
+import logo from "../assets/logo_azul_horizontal_1.png";
 
 export default function InicialScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Inicial</Text>
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate("Login", { color: "red" })}
-      />
-      <Button
-        title="Register"
-        onPress={() => navigation.navigate("Register", { color: "red" })}
+      <Image resizeMode="center" style={styles.logo} source={logo} />
+      <BigButton title="LOGIN" onPress={() => navigation.navigate("Login")} />
+      <BigButton
+        title="CADASTRO"
+        onPress={() => navigation.navigate("Register")}
       />
     </View>
   );
@@ -23,5 +24,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  logo: {
+    maxHeight: 300,
+    marginBottom: 10,
   },
 });

@@ -10,9 +10,21 @@ const Stack = createNativeStackNavigator();
 export default function UnloggedRoutes() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Inicial" component={InicialScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen
+        name="Inicial"
+        component={InicialScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
