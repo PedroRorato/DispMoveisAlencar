@@ -1,22 +1,38 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 
 import BigButton from "../components/BigButton";
+import Input from "../components/Input";
 import Link from "../components/Link";
 
 import logo from "../assets/logo_azul_vertical.png";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const formHandler = () => {
+    console.log(email, password);
+    if (password == "12345") {
+      navigation.navigate("Logged");
+    } else {
+      Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
+        text: "OK",
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Image resizeMode="contain" style={styles.logo} source={logo} />
-      <Text style={styles.label}>Email</Text>
-      <TextInput style={styles.input} onChangeText={setEmail} value={email} />
-      <Text style={styles.label}>Email</Text>
-      <TextInput style={styles.input} onChangeText={setEmail} value={email} />
-      <BigButton title="LOGIN" onPress={() => navigation.navigate("Login")} />
+      <Input title="Email" onChangeText={setEmail} value={email} />
+      <Input
+        title="Password"
+        onChangeText={setPassword}
+        value={password}
+        secureTextEntry={true}
+      />
+      <BigButton title="LOGIN" onPress={formHandler} />
       <Text style={styles.texto}>Ainda não possui uma conta?</Text>
       <Link title="Cadastrar" onPress={() => navigation.navigate("Register")} />
       {/* <Link title="Inicial" onPress={() => navigation.navigate("Inicial")} /> */}
