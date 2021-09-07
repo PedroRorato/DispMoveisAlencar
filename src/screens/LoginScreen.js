@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
   const formHandler = () => {
     console.log(email, password);
     if (password == "12345") {
-      navigation.navigate("Logged");
+      navigation.navigate("Tabs");
     } else {
       Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
         text: "OK",

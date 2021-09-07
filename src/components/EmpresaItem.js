@@ -1,12 +1,16 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
-export default function EmpresaScreen({ route }) {
-  const { nome, endereco, image } = route.params;
-
+export default function EmpresaItem({ nome, endereco, image, onPress }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.profileContainer}>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image resizeMode="cover" style={styles.image} source={image} />
         </View>
@@ -15,22 +19,22 @@ export default function EmpresaScreen({ route }) {
           <Text style={styles.endereco}>{endereco}</Text>
         </View>
       </View>
-      <Text style={styles.servicoText}>Serviços</Text>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  profileContainer: {
     backgroundColor: "#fff",
-    borderBottomWidth: 1,
+    borderRadius: 4,
+    borderWidth: 1,
     borderColor: "#ddd",
     marginBottom: 20,
     width: "100%",
   },
   imageContainer: {
+    borderTopRightRadius: 4,
+    borderTopLeftRadius: 4,
     height: 200,
     marginBottom: 8,
     justifyContent: "center",
@@ -51,11 +55,5 @@ const styles = StyleSheet.create({
   endereco: {
     color: "#555",
     fontSize: 16,
-  },
-  servicoText: {
-    textAlign: "center",
-    color: "#2699FA",
-    fontSize: 26,
-    fontWeight: "500",
   },
 });
