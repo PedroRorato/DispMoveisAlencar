@@ -38,11 +38,11 @@ function App() {
             })}
           />
           <Stack.Screen
-            name="Funcionários"
+            name="Funcionarios"
             component={FuncionariosScreen}
-            // options={({ route }) => ({
-            //   title: route.params.nome,
-            // })}
+            options={{
+              title: "Funcionários",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
