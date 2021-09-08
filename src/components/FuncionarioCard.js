@@ -1,32 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
-export default function ServicoCard({
-  nome,
-  descricao,
-  preco,
-  duracao,
-  onPress,
-}) {
+import user from "../assets/user.png";
+
+export default function FuncionarioCard({ id, nome, image, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.fakeMargin}>
         <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image resizeMode="cover" style={styles.image} source={user} />
+          </View>
           <View style={styles.textos}>
-            <Text style={styles.t1}>{nome}</Text>
-            <Text style={styles.t2}>{descricao}</Text>
+            <Text style={styles.nome}>{nome}</Text>
           </View>
-          <View style={styles.numeros}>
-            <Text style={styles.t1}>{preco}</Text>
-            <Text style={styles.t2}>{duracao}</Text>
-          </View>
-          <SimpleLineIcons
-            style={styles.icon}
-            name="arrow-right"
-            size={24}
-            color="#2699FA"
-          />
+          <SimpleLineIcons name="arrow-right" size={24} color="#2699FA" />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -52,25 +47,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
+  imageContainer: {
+    height: 50,
+    width: 50,
+    overflow: "hidden",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
   textos: {
     flex: 1,
+    paddingHorizontal: 15,
   },
-  t1: {
+  nome: {
     color: "#2699FA",
     fontSize: 18,
     fontWeight: "500",
-    marginBottom: 8,
-  },
-  t2: {
-    color: "#555",
-    fontSize: 14,
-  },
-  numeros: {
-    height: "100%",
-    paddingLeft: 12,
-    // backgroundColor: "lightgray",
-  },
-  icon: {
-    paddingLeft: 7,
   },
 });

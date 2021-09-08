@@ -112,6 +112,7 @@ export default function EmpresaScreen({ navigation, route }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
