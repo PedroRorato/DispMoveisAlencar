@@ -22,7 +22,7 @@ const DATA = [
 ];
 
 export default function FuncionariosScreen({ navigation, route }) {
-  const { nome, endereco, image } = route.params;
+  const { idServico, nomeServico } = route.params;
 
   const [funcionarios, setFuncionarios] = useState([]);
 
@@ -46,9 +46,11 @@ export default function FuncionariosScreen({ navigation, route }) {
       duracao={item.duracao}
       onPress={() =>
         navigation.navigate({
-          name: "Funcionarios",
+          name: "Agenda",
           params: {
-            id: item.id,
+            idFuncionario: item.id,
+            idServico,
+            nomeServico,
           },
         })
       }

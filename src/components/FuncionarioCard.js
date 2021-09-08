@@ -10,7 +10,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 
 import user from "../assets/user.png";
 
-export default function FuncionarioCard({ id, nome, image, onPress }) {
+export default function FuncionarioCard({ nome, image, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.fakeMargin}>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   textos: {
     flex: 1,
-    paddingHorizontal: 15,
+    paddingHorizontal: 12,
   },
   nome: {
     color: "#2699FA",

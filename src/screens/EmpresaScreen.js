@@ -93,7 +93,8 @@ export default function EmpresaScreen({ navigation, route }) {
         navigation.navigate({
           name: "Funcionarios",
           params: {
-            id: item.id,
+            idServico: item.id,
+            nomeServico: item.nome,
           },
         })
       }

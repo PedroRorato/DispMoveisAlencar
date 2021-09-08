@@ -8,6 +8,7 @@ import UnloggedRoutes from "./src/routes/unlogged.routes";
 
 import EmpresaScreen from "./src/screens/EmpresaScreen";
 import FuncionariosScreen from "./src/screens/FuncionariosScreen";
+import AgendaScreen from "./src/screens/AgendaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,13 @@ function App() {
             options={{
               title: "Funcionários",
             }}
+          />
+          <Stack.Screen
+            name="Agenda"
+            component={AgendaScreen}
+            options={({ route }) => ({
+              title: route.params.nomeServico,
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
