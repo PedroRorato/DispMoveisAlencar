@@ -46,11 +46,11 @@ function App() {
             }}
           />
           <Stack.Screen
-            name="Agenda"
+            name="Agendar"
             component={AgendaScreen}
-            options={({ route }) => ({
-              title: route.params.nomeServico,
-            })}
+            options={{
+              title: "Reservar um horário",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

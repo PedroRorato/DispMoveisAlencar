@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default function TimeButton({ title, onPress }) {
+export default function TimeButton({ horario, onPress }) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>{horario}</Text>
     </TouchableOpacity>
   );
 }
@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#2699FA",
     alignItems: "center",
     justifyContent: "center",
-    width: "20%",
     borderRadius: 4,
     height: 50,
-    marginBottom: 20,
+    width: 75,
+    marginLeft: 12,
   },
   text: {
     color: "#fff",

@@ -46,11 +46,12 @@ export default function FuncionariosScreen({ navigation, route }) {
       duracao={item.duracao}
       onPress={() =>
         navigation.navigate({
-          name: "Agenda",
+          name: "Agendar",
           params: {
             idFuncionario: item.id,
             idServico,
             nomeServico,
+            nomeFuncionario: item.nome,
           },
         })
       }
