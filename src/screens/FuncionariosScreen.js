@@ -22,13 +22,7 @@ const DATA = [
 ];
 
 export default function FuncionariosScreen({ navigation, route }) {
-  const { idServico, nomeServico } = route.params;
-
-  const [funcionarios, setFuncionarios] = useState([]);
-
-  useEffect(() => {
-    setFuncionarios(DATA);
-  }, []);
+  const { idServico, nomeServico, funcionarios } = route.params;
 
   const ListHeader = () => {
     return (

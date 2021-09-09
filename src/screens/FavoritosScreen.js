@@ -79,12 +79,7 @@ export default function FavoritosScreen({ navigation }) {
       onPress={() =>
         navigation.navigate({
           name: "Empresa",
-          params: {
-            id: item.id,
-            nome: item.nome,
-            endereco: item.endereco,
-            image: barbearia,
-          },
+          params: { id: item.id },
         })
       }
     />

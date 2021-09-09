@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
-import { Text, View } from "react-native";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
 
+//API
 import api from "../services/api";
 
 const AuthContext = createContext();
@@ -65,10 +63,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={context}>
-      {children}
-      {/* {!loading ? children : <Text>oi</Text>} */}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
   );
 };
 

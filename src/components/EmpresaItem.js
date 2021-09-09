@@ -7,12 +7,12 @@ import {
   View,
 } from "react-native";
 
-export default function EmpresaItem({ nome, endereco, image, onPress }) {
+export default function EmpresaItem({ nome, endereco, foto, onPress }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image resizeMode="cover" style={styles.image} source={image} />
+          <Image resizeMode="cover" style={styles.image} source={foto} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.nome}>{nome}</Text>

@@ -1,69 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
+//API
+import api from "../services/api";
+
+//Components
 import ServicoCard from "../components/ServicoCard";
 
-const DATA = [
-  {
-    id: 1,
-    nome: "Corte de Cabelo",
-    descricao: "Corte de cabelo com tesoura.",
-    preco: "R$ 40,00",
-    duracao: "1h",
-  },
-  {
-    id: 2,
-    nome: "Cabelo e Barba",
-    descricao:
-      "Corte de cabelo completo feito com navalha e toalha quente. Barba com máquina e navalha.",
-    preco: "R$ 60,00",
-    duracao: "1h30m",
-  },
-  {
-    id: 3,
-    nome: "Barba Completa",
-    descricao: "Barba com máquina e navalha.",
-    preco: "R$ 30,00",
-    duracao: "1h",
-  },
-  {
-    id: 4,
-    nome: "Pezinho",
-    descricao: "Remoção dos cabelos do pescoço e ao redor da orelha.",
-    preco: "R$ 20,00",
-    duracao: "30m",
-  },
-  {
-    id: 5,
-    nome: "Corte de Cabelo",
-    descricao: "Corte de cabelo com tesoura.",
-    preco: "R$ 40,00",
-    duracao: "1h30m",
-  },
-  {
-    id: 6,
-    nome: "Cabelo e Barba",
-    descricao:
-      "Corte de cabelo completo feito com navalha e toalha quente. Barba com máquina e navalha.",
-    preco: "R$ 60,00",
-    duracao: "1h30m",
-  },
-  {
-    id: 7,
-    nome: "Barba Completa",
-    descricao: "Barba com máquina e navalha.",
-    preco: "R$ 30,00",
-    duracao: "1h",
-  },
-];
+import barbearia from "../assets/barbearia.jpeg";
 
+//Function
 export default function EmpresaScreen({ navigation, route }) {
-  const { nome, endereco, image } = route.params;
+  const { id } = route.params;
 
+  const [empresa, setEmpresa] = useState({});
   const [servicos, setServicos] = useState([]);
 
   useEffect(() => {
-    setServicos(DATA);
+    (async () => {
+      const response = await api.get(`empresas/${id}`);
+      let data = response.data;
+      setEmpresa(data);
+      setServicos(data.servicos);
+      console.log(data.servicos);
+    })();
   }, []);
 
   const ListHeader = () => {
@@ -71,11 +31,11 @@ export default function EmpresaScreen({ navigation, route }) {
       <>
         <View style={styles.profileContainer}>
           <View style={styles.imageContainer}>
-            <Image resizeMode="cover" style={styles.image} source={image} />
+            <Image resizeMode="cover" style={styles.image} source={barbearia} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.nome}>{nome}</Text>
-            <Text style={styles.endereco}>{endereco}</Text>
+            <Text style={styles.nome}>{empresa.nome}</Text>
+            <Text style={styles.endereco}>{empresa.endereco}</Text>
           </View>
         </View>
         <Text style={styles.servicoText}>Serviços</Text>
@@ -95,6 +55,7 @@ export default function EmpresaScreen({ navigation, route }) {
           params: {
             idServico: item.id,
             nomeServico: item.nome,
+            funcionarios: item.funcionarios,
           },
         })
       }
@@ -133,7 +94,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   image: {
-    maxWidth: "100%",
+    height: "100%",
+    width: "100%",
   },
   textContainer: {
     paddingHorizontal: 15,

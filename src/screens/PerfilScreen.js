@@ -14,19 +14,33 @@ export default function PerfilScreen({ navigation }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+
+  useEffect(() => {
+    setNome(user.nome);
+    setSobrenome(user.sobrenome);
+    setEmail(user.email);
+  }, []);
 
   const formHandler = () => {
-    console.log(email, password);
-    if (password == "12345") {
+    if (email == "12345") {
       navigation.navigate("Logged");
     } else {
       Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
         text: "OK",
       });
     }
+  };
+
+  const passwordHandler = () => {
+    Alert.alert(
+      "Solicitação de troca de senha realizada",
+      "Nas próximas 24h você receberá um email com instruções para a troca de senha.",
+      {
+        text: "OK",
+      }
+    );
   };
 
   return (
@@ -36,10 +50,7 @@ export default function PerfilScreen({ navigation }) {
       <Input title="Email" onChangeText={setEmail} value={email} />
       <BigButton title="SALVAR" onPress={formHandler} />
       <View style={styles.logoutContainer}>
-        <BigButton
-          title="TROCAR SENHA"
-          onPress={() => navigation.navigate("Login")}
-        />
+        <BigButton title="TROCAR SENHA" onPress={passwordHandler} />
       </View>
       <View style={styles.logoutContainer}>
         <BigButton title="LOGOUT" onPress={logout} />

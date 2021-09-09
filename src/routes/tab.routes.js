@@ -23,8 +23,6 @@ export default function LoggedRoutes({ navigation }) {
         name="Empresas"
         component={EmpresasScreen}
         options={{
-          tabBarVisible: false,
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="search" color={color} size={size} />
           ),

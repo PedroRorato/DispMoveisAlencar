@@ -2,6 +2,9 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
+//API
+import "./src/firebase/config";
+
 //Context
 import { AuthProvider } from "./src/contexts/AuthContext";
 
