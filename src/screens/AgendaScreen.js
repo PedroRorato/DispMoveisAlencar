@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 
@@ -52,8 +52,24 @@ const renderItem = ({ item }) => (
 );
 
 export default function AgendaScreen({ navigation, route }) {
-  const { idFuncionario, idServico, nomeServico, nomeFuncionario } =
-    route.params;
+  const {
+    idFuncionario,
+    idServico,
+    nomeServico,
+    duracao,
+    preco,
+    nomeFuncionario,
+  } = route.params;
+
+  const [date, setDate] = useState("");
+
+  const setDateHandler = () => {
+    return (
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Escolha o Profissional</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -98,8 +114,10 @@ export default function AgendaScreen({ navigation, route }) {
         />
         <View style={styles.infoContainer}>
           <Text style={styles.text}>Informações da reserva</Text>
-          <Text style={styles.servico}>Corte de Cabelo</Text>
-          <Text style={styles.preco}>{nomeFuncionario} - R$ 40,00</Text>
+          <Text style={styles.servico}>{nomeServico}</Text>
+          <Text style={styles.preco}>
+            {nomeFuncionario} - {preco}
+          </Text>
           <Text style={styles.data}>9 de Julho | 10:00</Text>
         </View>
       </ScrollView>

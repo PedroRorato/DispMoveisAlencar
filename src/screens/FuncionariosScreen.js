@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
+//Components
 import FuncionarioCard from "../components/FuncionarioCard";
 
-const DATA = [
-  {
-    id: 1,
-    nome: "Pedro Barbeiro da Silva",
-    foto: "qualquelbosta",
-  },
-  {
-    id: 2,
-    nome: "João Manoel de Almeida",
-    foto: "qualquelbosta",
-  },
-  {
-    id: 3,
-    nome: "Thiago Joarez Emanuel",
-    foto: "qualquelbosta",
-  },
-];
-
+//Function
 export default function FuncionariosScreen({ navigation, route }) {
-  const { idServico, nomeServico, funcionarios } = route.params;
+  const { idServico, nomeServico, duracao, preco, funcionarios } = route.params;
 
+  //Header
   const ListHeader = () => {
     return (
       <View style={styles.textContainer}>
@@ -32,6 +17,7 @@ export default function FuncionariosScreen({ navigation, route }) {
     );
   };
 
+  //Renderização de itens
   const renderItem = ({ item }) => (
     <FuncionarioCard
       nome={item.nome}
@@ -42,9 +28,11 @@ export default function FuncionariosScreen({ navigation, route }) {
         navigation.navigate({
           name: "Agendar",
           params: {
-            idFuncionario: item.id,
             idServico,
             nomeServico,
+            duracao,
+            preco,
+            idFuncionario: item.id,
             nomeFuncionario: item.nome,
           },
         })

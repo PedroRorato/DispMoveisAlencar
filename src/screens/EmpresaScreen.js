@@ -22,7 +22,6 @@ export default function EmpresaScreen({ navigation, route }) {
       let data = response.data;
       setEmpresa(data);
       setServicos(data.servicos);
-      console.log(data.servicos);
     })();
   }, []);
 
@@ -55,6 +54,8 @@ export default function EmpresaScreen({ navigation, route }) {
           params: {
             idServico: item.id,
             nomeServico: item.nome,
+            duracao: item.duracao,
+            preco: item.preco,
             funcionarios: item.funcionarios,
           },
         })

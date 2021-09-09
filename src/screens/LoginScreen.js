@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation }) {
 
     //Chamada API
     try {
-      let data = { email: "p1@gmail.com", password: "12345" }; //{ email, password };
+      let data = { email: "c1@gmail.com", password: "12345" }; //{ email, password };
       login(data);
     } catch (error) {
       Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
