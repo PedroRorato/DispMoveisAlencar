@@ -1,31 +1,58 @@
 import React, { useState } from "react";
 import { Alert, Image, StyleSheet, Text, View } from "react-native";
 
+//Context
+import { useAuth } from "../contexts/AuthContext";
+
+//Components
 import BigButton from "../components/BigButton";
 import Input from "../components/Input";
 import Link from "../components/Link";
 
 import logo from "../assets/logo_azul_vertical.png";
 
+//
 export default function LoginScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
+
   const formHandler = () => {
-    console.log(email, password);
-    if (password == "12345") {
-      navigation.navigate("Tabs");
-    } else {
+    setIsLoading(true);
+    //Sanitização
+    // if (email == "" || password == "") {
+    //   Alert.alert("Formulário Incompleto", "Preencha todos os campos!", {
+    //     text: "OK",
+    //   });
+    //   setIsLoading(false);
+    //   return;
+    // }
+
+    //Chamada API
+    try {
+      let data = { email: "p1@gmail.com", password: "12345" }; //{ email, password };
+      login(data);
+    } catch (error) {
       Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
         text: "OK",
       });
+      console.log(error);
     }
+    setIsLoading(false);
   };
 
   return (
     <View style={styles.container}>
       <Image resizeMode="contain" style={styles.logo} source={logo} />
-      <Input title="Email" onChangeText={setEmail} value={email} />
+      <Input
+        title="Email"
+        onChangeText={setEmail}
+        value={email}
+        autoCapitalize="none"
+        p
+      />
       <Input
         title="Password"
         onChangeText={setPassword}
@@ -50,7 +77,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     maxWidth: "90%",
-    // backgroundColor: "#bbb",
     marginBottom: 20,
     maxHeight: 100,
   },

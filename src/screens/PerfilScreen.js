@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
+//Context
+import { useAuth } from "../contexts/AuthContext";
+
+//Components
 import BigButton from "../components/BigButton";
 import Input from "../components/Input";
-import Link from "../components/Link";
 
 import logo from "../assets/logo_azul_vertical.png";
 
@@ -12,6 +15,8 @@ export default function PerfilScreen({ navigation }) {
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { logout } = useAuth();
 
   const formHandler = () => {
     console.log(email, password);
@@ -37,12 +42,8 @@ export default function PerfilScreen({ navigation }) {
         />
       </View>
       <View style={styles.logoutContainer}>
-        <BigButton
-          title="LOGOUT"
-          onPress={() => navigation.navigate("Login")}
-        />
+        <BigButton title="LOGOUT" onPress={logout} />
       </View>
-      {/* <Link title="Inicial" onPress={() => navigation.navigate("Inicial")} /> */}
     </View>
   );
 }

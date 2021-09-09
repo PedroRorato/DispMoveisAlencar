@@ -8,7 +8,9 @@ import logo from "../assets/logo_azul_horizontal_1.png";
 export default function InicialScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Image resizeMode="center" style={styles.logo} source={logo} />
+      <View style={styles.logoContainer}>
+        <Image resizeMode="contain" style={styles.logo} source={logo} />
+      </View>
       <BigButton title="LOGIN" onPress={() => navigation.navigate("Login")} />
       <BigButton
         title="CADASTRO"
@@ -26,8 +28,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
   },
-  logo: {
+  logoContainer: {
     maxHeight: 300,
-    marginBottom: 10,
+    marginBottom: 20,
+    paddingHorizontal: 20,
+    width: "100%",
+  },
+  logo: {
+    height: "100%",
+    width: "100%",
   },
 });

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+
+import { useAuth } from "../contexts/AuthContext";
 
 import BigButton from "../components/BigButton";
 import Input from "../components/Input";
@@ -13,23 +15,44 @@ export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const formHandler = () => {
-    console.log(email, password);
-    if (password == "12345") {
-      navigation.navigate("Logged");
-    } else {
-      Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
+  const { login } = useAuth();
+
+  const formHandler = async () => {
+    if (nome == "" || sobrenome == "" || email == "" || password == "") {
+      Alert.alert("Formulário Incompleto", "Preencha todos os campos!", {
         text: "OK",
       });
+      return;
+    }
+    let data = { nome, sobrenome, email, password, tipo: "cliente" };
+
+    try {
+      await login(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollContainer}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Image resizeMode="contain" style={styles.logo} source={logo} />
-      <Input title="Nome" onChangeText={setNome} value={nome} />
+      <Input
+        title="Nome"
+        onChangeText={setNome}
+        value={nome}
+        returnKeyType="next"
+      />
       <Input title="Sobrenome" onChangeText={setSobrenome} value={sobrenome} />
-      <Input title="Email" onChangeText={setEmail} value={email} />
+      <Input
+        title="Email"
+        onChangeText={setEmail}
+        value={email}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
       <Input
         title="Password"
         onChangeText={setPassword}
@@ -39,22 +62,23 @@ export default function RegisterScreen({ navigation }) {
       <BigButton title="CADASTRAR" onPress={formHandler} />
       <Text style={styles.texto}>Já possui conta?</Text>
       <Link title="Login" onPress={() => navigation.navigate("Login")} />
-      {/* <Link title="Inicial" onPress={() => navigation.navigate("Inicial")} /> */}
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollContainer: {
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    height: 100,
     paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  contentContainer: {
+    alignItems: "center",
+    paddingBottom: 10,
   },
   logo: {
     maxWidth: "90%",
-    // backgroundColor: "#bbb",
     marginBottom: 20,
     maxHeight: 100,
   },

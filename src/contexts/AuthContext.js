@@ -1,4 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+
+import { Text, View } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
 
 import api from "../services/api";
@@ -9,59 +13,61 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
-    //###Trocar pela memória do Aparelho###
-    const token = localStorage.getItem("@AgendouMe:token");
-
-    if (token) {
-      //Add Header
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-      //Usar Token
-      let decodedToken = jwt_decode(token);
-      let currentDate = new Date();
-      if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        logoutHandler();
-        console.log("Token Expired!");
-      } else {
-        //###Trocar pela memória do Aparelho###
-        const userInfo = await localStorage.getItem("@AgendouMe:user");
-        setUser(JSON.parse(userInfo));
+  useEffect(() => {
+    const inicial = async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        //Add Header
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+        //Usar Token
+        let decodedToken = jwt_decode(token);
+        let currentDate = new Date();
+        if (decodedToken.exp * 1000 < currentDate.getTime()) {
+          logoutHandler();
+          console.log("Token Expired!");
+        } else {
+          const userInfo = await AsyncStorage.getItem("user");
+          setUser(JSON.parse(userInfo));
+        }
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+    return () => {
+      inicial();
+    };
   }, []);
 
-  const loginHandler = async ({ email, password }) => {
-    const response = await api.post("login", { email, password });
-    //Token e User
+  const loginHandler = async (data) => {
+    //Realiza cadastro no server
+    const response = await api.post("login", data);
+    //Token e dados do usuario
     const { token, sessionData } = response.data;
-    //Armazena dados do user
+    //Insere dados do usuario no context
     setUser(sessionData);
     //Armazena no Storage
-
-    //###Trocar pela memória do Aparelho###
-    localStorage.setItem("@AgendouMe:token", token);
-    localStorage.setItem("@AgendouMe:user", JSON.stringify(sessionData));
+    await AsyncStorage.setItem("token", token);
+    await AsyncStorage.setItem("user", JSON.stringify(sessionData));
   };
 
-  const logoutHandler = () => {
-    //Limpa Storage
-
-    //###Trocar pela memória do Aparelho###
-    localStorage.removeItem("@AgendouMe:token");
-    localStorage.removeItem("@AgendouMe:user");
+  const logoutHandler = async () => {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("user");
     setUser(null);
   };
 
+  const registerHandler = async ({ email, password }) => {};
+
   const context = {
-    user: user,
+    user,
     login: loginHandler,
     logout: logoutHandler,
+    register: registerHandler,
   };
 
   return (
     <AuthContext.Provider value={context}>
-      {!loading && children}
+      {children}
+      {/* {!loading ? children : <Text>oi</Text>} */}
     </AuthContext.Provider>
   );
 };

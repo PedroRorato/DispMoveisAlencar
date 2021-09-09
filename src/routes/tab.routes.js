@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -11,12 +11,6 @@ import PerfilScreen from "../screens/PerfilScreen";
 const Tab = createBottomTabNavigator();
 
 export default function LoggedRoutes({ navigation }) {
-  useEffect(() => {
-    navigation.setOptions({
-      tabBarVisible: false,
-    });
-  }, [navigation]);
-
   return (
     <Tab.Navigator
       screenOptions={{
