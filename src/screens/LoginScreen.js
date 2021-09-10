@@ -13,26 +13,22 @@ import logo from "../assets/logo_azul_vertical.png";
 
 //Function
 export default function LoginScreen({ navigation }) {
-  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { login } = useAuth();
 
   const formHandler = () => {
-    setIsLoading(true);
-    //Sanitização
-    // if (email == "" || password == "") {
-    //   Alert.alert("Formulário Incompleto", "Preencha todos os campos!", {
-    //     text: "OK",
-    //   });
-    //   setIsLoading(false);
-    //   return;
-    // }
+    if (email == "" || password == "") {
+      Alert.alert("Formulário Incompleto", "Preencha todos os campos!", {
+        text: "OK",
+      });
+      return;
+    }
 
     //Chamada API
     try {
-      let data = { email: "c1@gmail.com", password: "12345" }; //{ email, password };
+      let data = { email, password };
       login(data);
     } catch (error) {
       Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
@@ -40,7 +36,6 @@ export default function LoginScreen({ navigation }) {
       });
       console.log(error);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -62,7 +57,6 @@ export default function LoginScreen({ navigation }) {
       <BigButton title="LOGIN" onPress={formHandler} />
       <Text style={styles.texto}>Ainda não possui uma conta?</Text>
       <Link title="Cadastrar" onPress={() => navigation.navigate("Register")} />
-      {/* <Link title="Inicial" onPress={() => navigation.navigate("Inicial")} /> */}
     </View>
   );
 }
