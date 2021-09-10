@@ -5,8 +5,10 @@ import jwt_decode from "jwt-decode";
 //API
 import api from "../services/api";
 
+//Context
 const AuthContext = createContext();
 
+//Provider
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
@@ -29,6 +31,23 @@ export const AuthProvider = ({ children }) => {
       }
     })();
   }, []);
+
+  const perfilHandler = async ({ nome, sobrenome, email }) => {
+    setUser((prevValues) => {
+      let obj = prevValues;
+
+      obj["nome"] = nome;
+      obj["sobrenome"] = sobrenome;
+      obj["email"] = email;
+
+      return obj;
+    });
+
+    //Realiza login no server
+    const response = await api.put("perfil", { nome, sobrenome, email });
+
+    // await AsyncStorage.setItem("user", JSON.stringify(sessionData));
+  };
 
   const loginHandler = async (data) => {
     //Realiza login no server
@@ -64,6 +83,7 @@ export const AuthProvider = ({ children }) => {
     user,
     login: loginHandler,
     logout: logoutHandler,
+    perfil: perfilHandler,
     register: registerHandler,
   };
 
@@ -72,7 +92,8 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+//UseContext
 export const useAuth = () => {
-  const authContext1 = useContext(AuthContext);
-  return authContext1;
+  const authContext = useContext(AuthContext);
+  return authContext;
 };

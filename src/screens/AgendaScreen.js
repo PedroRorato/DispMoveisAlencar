@@ -42,14 +42,26 @@ export default function AgendaScreen({ navigation, route }) {
     nomeFuncionario,
   } = route.params;
 
+  const [minDate, setMinDate] = useState("");
+  const [markedDates, setMarkedDates] = useState({});
   const [date, setDate] = useState("");
-  const [markedDates, setMarkedDates] = useState("");
   const [dateText, setDateText] = useState("");
   const [horarios, setHorarios] = useState([]);
-  const [horario, setHorario] = useState("");
+  const [horario, setHorario] = useState("?");
 
   useEffect(() => {
     (async () => {
+      let newDate = new Date();
+      setDateText(`${newDate.getDate()} de ${meses[newDate.getMonth() + 1]}`);
+      let dateString = newDate.toISOString().split("T")[0];
+      setMinDate(dateString);
+      setDate(dateString);
+      let marked = {};
+      marked[dateString] = {
+        selected: true,
+        selectedColor: "#2699FA",
+      };
+      setMarkedDates(marked);
       const response = await api.get("horarios-disponiveis");
       let data = response.data;
       setHorarios(data);
@@ -71,7 +83,7 @@ export default function AgendaScreen({ navigation, route }) {
   };
 
   const formHandler = () => {
-    if (date == "" || horario == "") {
+    if (date == "" || horario == "?") {
       Alert.alert(
         "Dados Incompletos!",
         "Selecione a data e a hora antes de reservar.",
@@ -88,6 +100,7 @@ export default function AgendaScreen({ navigation, route }) {
         text: "OK",
       }
     );
+    navigation.navigate("Empresas");
   };
 
   const renderItem = ({ item }) => (
@@ -103,7 +116,7 @@ export default function AgendaScreen({ navigation, route }) {
         <Calendar
           style={styles.calendar}
           hideExtraDays
-          minDate={"2021-09-08"}
+          minDate={minDate}
           // disableArrowLeft={true}
           onDayPress={(day) => {
             setDateHandler(day);

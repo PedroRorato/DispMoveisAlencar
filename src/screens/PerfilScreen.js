@@ -8,14 +8,13 @@ import { useAuth } from "../contexts/AuthContext";
 import BigButton from "../components/BigButton";
 import Input from "../components/Input";
 
-import logo from "../assets/logo_azul_vertical.png";
-
+//Function
 export default function PerfilScreen({ navigation }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
 
-  const { user, logout } = useAuth();
+  const { user, logout, perfil } = useAuth();
 
   useEffect(() => {
     setNome(user.nome);
@@ -24,13 +23,14 @@ export default function PerfilScreen({ navigation }) {
   }, []);
 
   const formHandler = () => {
-    if (email == "12345") {
-      navigation.navigate("Logged");
-    } else {
-      Alert.alert("Dados Incorretos", "Verifique as informações passadas!", {
+    if (nome == "" || sobrenome == "" || email == "") {
+      Alert.alert("Dados Incompletos", "Verifique as informações passadas!", {
         text: "OK",
       });
+      return;
     }
+    //Atualizar
+    perfil({ nome, sobrenome, email });
   };
 
   const passwordHandler = () => {
