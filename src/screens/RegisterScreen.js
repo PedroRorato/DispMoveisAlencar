@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
+//Context
 import { useAuth } from "../contexts/AuthContext";
 
+//Components
 import BigButton from "../components/BigButton";
 import Input from "../components/Input";
 import Link from "../components/Link";
 
 import logo from "../assets/logo_azul_vertical.png";
 
+//Function
 export default function RegisterScreen({ navigation }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const formHandler = async () => {
     if (nome == "" || sobrenome == "" || email == "" || password == "") {
@@ -24,10 +27,10 @@ export default function RegisterScreen({ navigation }) {
       });
       return;
     }
-    let data = { nome, sobrenome, email, password, tipo: "cliente" };
 
     try {
-      await login(data);
+      let data = { nome, sobrenome, email, password, tipo: "cliente" };
+      await register(data);
     } catch (error) {
       console.log(error);
     }

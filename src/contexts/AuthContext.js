@@ -9,10 +9,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const inicial = async () => {
+    (async () => {
       const token = await AsyncStorage.getItem("token");
       if (token) {
         //Add Header
@@ -28,15 +27,11 @@ export const AuthProvider = ({ children }) => {
           setUser(JSON.parse(userInfo));
         }
       }
-      setLoading(false);
-    };
-    return () => {
-      inicial();
-    };
+    })();
   }, []);
 
   const loginHandler = async (data) => {
-    //Realiza cadastro no server
+    //Realiza login no server
     const response = await api.post("login", data);
     //Token e dados do usuario
     const { token, sessionData } = response.data;
@@ -53,7 +48,17 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const registerHandler = async ({ email, password }) => {};
+  const registerHandler = async (data) => {
+    //Realiza cadastro no server
+    const response = await api.post("register", data);
+    //Token e dados do usuario
+    const { token, sessionData } = response.data;
+    //Insere dados do usuario no context
+    setUser(sessionData);
+    //Armazena no Storage
+    await AsyncStorage.setItem("token", token);
+    await AsyncStorage.setItem("user", JSON.stringify(sessionData));
+  };
 
   const context = {
     user,

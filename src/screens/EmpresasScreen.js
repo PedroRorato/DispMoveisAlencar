@@ -7,8 +7,6 @@ import api from "../services/api";
 //Components
 import EmpresaItem from "../components/EmpresaItem";
 
-import barbearia from "../assets/barbearia.jpeg";
-
 //Function
 export default function EmpresasScreen({ navigation }) {
   const [listaEmpresas, setListaEmpresas] = useState([]);

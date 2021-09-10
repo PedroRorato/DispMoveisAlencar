@@ -11,7 +11,7 @@ import Link from "../components/Link";
 
 import logo from "../assets/logo_azul_vertical.png";
 
-//
+//Function
 export default function LoginScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
