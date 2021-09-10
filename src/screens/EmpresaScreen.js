@@ -7,8 +7,6 @@ import api from "../services/api";
 //Components
 import ServicoCard from "../components/ServicoCard";
 
-import barbearia from "../assets/barbearia.jpeg";
-
 //Function
 export default function EmpresaScreen({ navigation, route }) {
   const { id } = route.params;
@@ -22,6 +20,7 @@ export default function EmpresaScreen({ navigation, route }) {
       let data = response.data;
       setEmpresa(data);
       setServicos(data.servicos);
+      console.log("foto: ", data.foto);
     })();
   }, []);
 
@@ -30,7 +29,11 @@ export default function EmpresaScreen({ navigation, route }) {
       <>
         <View style={styles.profileContainer}>
           <View style={styles.imageContainer}>
-            <Image resizeMode="cover" style={styles.image} source={barbearia} />
+            <Image
+              resizeMode="cover"
+              style={styles.image}
+              source={{ uri: empresa.foto }}
+            />
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.nome}>{empresa.nome}</Text>

@@ -7,6 +7,7 @@ import api from "../services/api";
 //Components
 import AgendamentoCard from "../components/AgendamentoCard";
 
+//Render Item
 const renderItem = ({ item }) => (
   <AgendamentoCard
     id={item.id}
@@ -16,6 +17,7 @@ const renderItem = ({ item }) => (
   />
 );
 
+//Function
 export default function AgendamentosScreen() {
   const [agendamentos, setAgendamentos] = useState([]);
 
