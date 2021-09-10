@@ -25,7 +25,7 @@ export default function EmpresasScreen({ navigation }) {
     <EmpresaItem
       nome={item.nome}
       endereco={item.endereco}
-      foto={barbearia}
+      foto={{ uri: item.foto }}
       onPress={() =>
         navigation.navigate({
           name: "Empresa",

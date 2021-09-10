@@ -20,7 +20,6 @@ export default function EmpresaScreen({ navigation, route }) {
       let data = response.data;
       setEmpresa(data);
       setServicos(data.servicos);
-      console.log("foto: ", data.foto);
     })();
   }, []);
 
