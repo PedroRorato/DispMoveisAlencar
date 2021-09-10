@@ -1,54 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
+//API
+import api from "../services/api";
+
+//Components
 import AgendamentoCard from "../components/AgendamentoCard";
-
-import barbearia from "../assets/barbearia.jpeg";
-
-const DATA = [
-  {
-    id: 1,
-    data: "9 de Julho | 10:00",
-    servico: "Corte de Cabelo",
-    empresa: "Barbearia do Zé",
-  },
-  {
-    id: 2,
-    data: "10 de Julho | 20:00",
-    servico: "Barba",
-    empresa: "Barbearia Fígaro",
-  },
-  {
-    id: 3,
-    data: "19 de Julho | 12:00",
-    servico: "Pezinho",
-    empresa: "Barbearia Dom",
-  },
-  {
-    id: 4,
-    data: "8 de Agosto | 8:00",
-    servico: "Massagem",
-    empresa: "Massoterapia Holistica",
-  },
-  {
-    id: 5,
-    data: "29 de Agosto | 15:00",
-    servico: "Consulta Médica",
-    empresa: "Dr Frankenstein",
-  },
-  {
-    id: 6,
-    data: "7 de Setembro | 15:00",
-    servico: "Corte de Cabelo",
-    empresa: "Barbearia do Zé",
-  },
-  {
-    id: 7,
-    data: "20 de Julho | 10:00",
-    servico: "Corte de Cabelo",
-    empresa: "Barbearia do Zé",
-  },
-];
 
 const renderItem = ({ item }) => (
   <AgendamentoCard
@@ -60,11 +17,21 @@ const renderItem = ({ item }) => (
 );
 
 export default function AgendamentosScreen() {
+  const [agendamentos, setAgendamentos] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.get("agendamentos");
+      let data = response.data;
+      setAgendamentos(data);
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
-        data={DATA}
+        data={agendamentos}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />

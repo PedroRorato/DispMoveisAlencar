@@ -1,55 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 
+//API
+import api from "../services/api";
+
+//Components
 import TimeButton from "../components/TimeButton";
 import BigButton from "../components/BigButton";
 
-const DATA = [
-  {
-    id: 1,
-    horario: "9:00",
-  },
-  {
-    id: 2,
-    horario: "10:00",
-  },
-  {
-    id: 3,
-    horario: "11:00",
-  },
-  {
-    id: 4,
-    horario: "14:00",
-  },
-  {
-    id: 5,
-    horario: "15:00",
-  },
-  {
-    id: 6,
-    horario: "16:00",
-  },
-  {
-    id: 7,
-    horario: "17:00",
-  },
-  {
-    id: 8,
-    horario: "20:00",
-  },
-  {
-    id: 9,
-    horario: "21:00",
-  },
-];
-
-const renderItem = ({ item }) => (
-  <TimeButton
-    horario={item.horario}
-    onPress={() => console.log("Pressionado")}
-  />
-);
+//Constantes
+const meses = {
+  1: "Janeiro",
+  2: "Fevereiro",
+  3: "Março",
+  4: "Abril",
+  5: "Maio",
+  6: "Junho",
+  7: "Julho",
+  8: "Agosto",
+  9: "Setembro",
+  10: "Outubro",
+  11: "Novembro",
+  12: "Dezembro",
+};
 
 export default function AgendaScreen({ navigation, route }) {
   const {
@@ -62,14 +43,59 @@ export default function AgendaScreen({ navigation, route }) {
   } = route.params;
 
   const [date, setDate] = useState("");
+  const [markedDates, setMarkedDates] = useState("");
+  const [dateText, setDateText] = useState("");
+  const [horarios, setHorarios] = useState([]);
+  const [horario, setHorario] = useState("");
 
-  const setDateHandler = () => {
-    return (
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Escolha o Profissional</Text>
-      </View>
+  useEffect(() => {
+    (async () => {
+      const response = await api.get("horarios-disponiveis");
+      let data = response.data;
+      setHorarios(data);
+    })();
+  }, []);
+
+  const setDateHandler = async (date) => {
+    setDateText(`${date.day} de ${meses[date.month]}`);
+    setDate(date.dateString);
+    let marked = {};
+    marked[date.dateString] = {
+      selected: true,
+      selectedColor: "#2699FA",
+    };
+    setMarkedDates(marked);
+    const response = await api.get("horarios-disponiveis");
+    let data = response.data;
+    setHorarios(data);
+  };
+
+  const formHandler = () => {
+    if (date == "" || horario == "") {
+      Alert.alert(
+        "Dados Incompletos!",
+        "Selecione a data e a hora antes de reservar.",
+        {
+          text: "OK",
+        }
+      );
+      return;
+    }
+    Alert.alert(
+      "Horário reservado com sucesso!",
+      "Por favor, chegue 5 minutos antes do horário marcado.",
+      {
+        text: "OK",
+      }
     );
   };
+
+  const renderItem = ({ item }) => (
+    <TimeButton
+      horario={item.horario}
+      onPress={() => setHorario(item.horario)}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -80,7 +106,7 @@ export default function AgendaScreen({ navigation, route }) {
           minDate={"2021-09-08"}
           // disableArrowLeft={true}
           onDayPress={(day) => {
-            console.log("selected day", day);
+            setDateHandler(day);
           }}
           theme={{
             textSectionTitleColor: "#b6c1cd",
@@ -95,12 +121,7 @@ export default function AgendaScreen({ navigation, route }) {
             monthTextColor: "#2699FA",
             textDayHeaderFontWeight: "500",
           }}
-          markedDates={{
-            "2021-09-09": {
-              selected: true,
-              selectedColor: "#2699FA",
-            },
-          }}
+          markedDates={markedDates}
         />
         <View style={styles.textContainer}>
           <Text style={styles.text}>Horários Disponíveis</Text>
@@ -108,7 +129,7 @@ export default function AgendaScreen({ navigation, route }) {
         <FlatList
           horizontal
           style={styles.list}
-          data={DATA}
+          data={horarios}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
         />
@@ -118,14 +139,13 @@ export default function AgendaScreen({ navigation, route }) {
           <Text style={styles.preco}>
             {nomeFuncionario} - {preco}
           </Text>
-          <Text style={styles.data}>9 de Julho | 10:00</Text>
+          <Text style={styles.data}>
+            {dateText} | {horario}
+          </Text>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <BigButton
-          title="RESERVAR"
-          onPress={() => navigation.navigate("Login")}
-        />
+        <BigButton title="RESERVAR" onPress={formHandler} />
       </View>
     </View>
   );

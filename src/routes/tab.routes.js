@@ -3,8 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import EmpresasScreen from "../screens/EmpresasScreen";
-
-import FavoritosScreen from "../screens/FavoritosScreen";
 import AgendamentosScreen from "../screens/AgendamentosScreen";
 import PerfilScreen from "../screens/PerfilScreen";
 
@@ -25,16 +23,6 @@ export default function LoggedRoutes({ navigation }) {
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="search" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Favoritos"
-        component={FavoritosScreen}
-        options={{
-          tabBarLabel: "Favoritos",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="heart" color={color} size={size} />
           ),
         }}
       />
